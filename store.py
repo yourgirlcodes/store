@@ -2,13 +2,14 @@
 from bottle import route, run, template, static_file, get, post, delete, request
 from sys import argv
 import json
-import pymysql
+# import pymysql
 import database
+import db_sql
+
 
 @get("/admin")
 def admin_portal():
-	return template("pages/admin.html")
-
+    return template("pages/admin.html")
 
 
 @get("/")
@@ -34,13 +35,13 @@ def images(filename):
 @post("/category")
 def category_to_database():
     requested_category = request.POST.get("name")
-    result = database.insert_category(requested_category)
+    result = db_sql.insert_category(requested_category)
     return json.dumps(result)
 
 
 @get("/categories")
-def send_categories():
-    result = database.return_categories()
+def get_categories():
+    result = db_sql.find_categories()
     return json.dumps(result)
 
 # @delete("/category/<id>")
@@ -48,4 +49,4 @@ def send_categories():
 #     result =
 
 
-run(host='localhost', port=8000)
+run(host='localhost', port=7000)
