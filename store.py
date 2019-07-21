@@ -34,7 +34,6 @@ def images(filename):
 
 @post("/category")
 def category_to_database():
-
     result = db_sql.insert_category()
     return json.dumps(result)
 
@@ -48,10 +47,10 @@ def get_categories():
 @delete("/category/<id>")
 def delete_category(id):
     try:
-        with connection.cursor() as cursor:
-            sql = "DELETE FROM category WHERE id = {}".format(id)
+        with db_sql.connection.cursor() as cursor:
+            sql = "DELETE FROM categories WHERE id = {}".format(id)
             cursor.execute(sql)
-            connection.commit()
+            db_sql.connection.commit()
             return json.dumps({'STATUS': 'SUCCESS', 'CODE': 201})
     except Exception:
         return json.dumps({'STATUS': 'ERROR', 'MSG': 'Internal error', 'CODE': 500})
