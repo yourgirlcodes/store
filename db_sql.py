@@ -34,17 +34,17 @@ def insert_category():
             requested_category = request.POST.get("name")
             sql = "INSERT into categories(name) values('{}');".format(requested_category)
             cursor.execute(sql)
-            connect.commit()
-            catId = cursor.lastrowid
+            cat_id = cursor.lastrowid
             result = {
                 "STATUS": "SUCCESS",
                 "catName": requested_category,
-                "catId": catId
+                "catId": cat_id,
+                "MSG": "Category created successfully"
             }
             return result
-        except:
+        except Exception as e:
             result = {
                 "STATUS": "ERROR",
-                "MSG": "internal error"
+                "MSG": str(e)
             }
             return result
