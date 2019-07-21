@@ -34,8 +34,8 @@ def images(filename):
 
 @post("/category")
 def category_to_database():
-    requested_category = request.POST.get("name")
-    result = db_sql.insert_category(requested_category)
+
+    result = db_sql.insert_category()
     return json.dumps(result)
 
 

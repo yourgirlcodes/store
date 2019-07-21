@@ -1,4 +1,5 @@
 from pymysql import connect, cursors
+from bottle import request
 
 connection = connect(host='localhost',
                      user='root',
@@ -27,13 +28,14 @@ def find_categories():
             return result
 
 
-def insert_category(requested_category):
+def insert_category():
     with connection.cursor() as cursor:
-        catId = cursor.lastrowid + 1
-        sql = "INSERT into categories values({id}, {requested_category})".format(catId, requested_category)
         try:
+            requested_category = request.POST.get("name")
+            sql = "INSERT into categories(name) values('{}');".format(requested_category)
             cursor.execute(sql)
             connect.commit()
+            catId = cursor.lastrowid
             result = {
                 "STATUS": "SUCCESS",
                 "catName": requested_category,
