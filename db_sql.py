@@ -3,7 +3,7 @@ from bottle import request
 
 connection = connect(host='localhost',
                      user='root',
-                     password='root',
+                     password='CoeZohen!12345',
                      db='store',
                      charset='utf8',
                      cursorclass=cursors.DictCursor)
