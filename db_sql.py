@@ -1,9 +1,10 @@
 from pymysql import connect, cursors
 from bottle import request
+import json
 
 connection = connect(host='localhost',
                      user='root',
-                     password='CoeZohen!12345',
+                     password='xxxx',
                      db='store',
                      charset='utf8',
                      cursorclass=cursors.DictCursor)
@@ -48,3 +49,18 @@ def insert_category():
                 "MSG": str(e)
             }
             return result
+
+
+def delete_category():
+    with connection.cursor() as cursor:
+        try:
+            with connection.cursor() as cursor:
+                sql = "DELETE FROM categories WHERE id = {}".format(id)
+                cursor.execute(sql)
+                connection.commit()
+                result = json.dumps({'STATUS': 'SUCCESS', 'CODE': 201})
+                return result
+        except Exception:
+            result = json.dumps({'STATUS': 'ERROR', 'MSG': 'Internal error', 'CODE': 500})
+            return result
+

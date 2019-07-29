@@ -42,17 +42,11 @@ def category_to_database():
 def get_categories():
     result = db_sql.find_categories()
     return json.dumps(result)
-#
+
 
 @delete("/category/<id>")
-def delete_category(id):
-    try:
-        with db_sql.connection.cursor() as cursor:
-            sql = "DELETE FROM categories WHERE id = {}".format(id)
-            cursor.execute(sql)
-            db_sql.connection.commit()
-            return json.dumps({'STATUS': 'SUCCESS', 'CODE': 201})
-    except Exception:
-        return json.dumps({'STATUS': 'ERROR', 'MSG': 'Internal error', 'CODE': 500})
+def delete_category():
+    result = db_sql.delete_category()
+    return json.dumps(result)
 
 run(host='localhost', port=8000)
